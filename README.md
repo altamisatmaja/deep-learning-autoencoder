@@ -1,38 +1,36 @@
-# Autoencoder Chatbot Emotion Mapping
+# Autoencoder Chatbot Pemetaaan Emosi
 
-## 🧠 Project Overview
-This project trains an autoencoder to convert one facial emotion into another (e.g., smile → neutral) using a custom image dataset. It supports chatbot applications that involve visual emotion understanding.
+## 🧠 Deskripsi Proyek
+Proyek ini menggunakan autoencoder berbasis Convolutional Neural Network (CNN) untuk mentransformasi ekspresi wajah dari satu emosi ke emosi lainnya — misalnya dari ekspresi tersenyum menjadi ekspresi netral. Model ini dirancang untuk mendukung chatbot yang mampu mengenali dan memahami emosi wajah secara visual.
 
 ## 📁 Dataset
-- The dataset consists of 20+ pairs of images.
-- Each pair contains an input image (smiling face) and a target output image (neutral face).
-- Stored in:
-  - `dataset/input/`
-  - `dataset/output/`
+- Dataset terdiri dari lebih dari 20 pasang gambar.
+- Setiap pasangan gambar terdiri dari:
+  - **Input**: wajah dengan ekspresi tersenyum (`dataset/input/`)
+  - **Output (Target)**: wajah dengan ekspresi netral (`dataset/output/`)
+- Format gambar: PNG atau JPG
 
-## ⚙️ Model Architecture
-CNN-based autoencoder:
-- **Encoder**: 3 convolutional layers
-- **Latent Space**: 64-dimensional bottleneck
-- **Decoder**: 3 transposed convolutional layers
+## ⚙️ Arsitektur Model
+Model autoencoder dibangun dengan struktur sebagai berikut:
 
-## 📉 Training
-- Loss: MSELoss
-- Optimizer: Adam
-- Epochs: 100
-- Training/Validation split: 80/20
+- **Encoder**
+  - 3 Lapisan Konvolusi (Conv2D) + ReLU + BatchNorm
+  - Bottleneck berdimensi 64
+- **Decoder**
+  - 3 Lapisan Transposed Convolution (ConvTranspose2D) + ReLU
+  - Output layer menggunakan aktivasi sigmoid
 
-## ✅ Results
-### Example Results:
-| Input (Smile) | Output (Predicted) | Target (Neutral) |
-|---------------|--------------------|------------------|
-| ![](input.jpg) | ![](output_pred.jpg) | ![](output_true.jpg) |
+## 📉 Pelatihan Model
+- **Loss Function**: MSELoss (Mean Squared Error)
+- **Optimizer**: Adam
+- **Epochs**: 100
+- **Batch Size**: 8
+- **Pembagian Data**: 80% untuk pelatihan, 20% untuk validasi
 
-### Training Loss Curve:
-![](loss_plot.png)
+Selama pelatihan, grafik loss akan disimpan dalam file `loss_plot.png`.
 
-## 📦 How to Run
+
+## 🚀 Cara Menjalankan
+### 1. Install Dependensi
 ```bash
 pip install -r requirements.txt
-python train.py
-python predict.py --input "dataset/input/sample.png"
